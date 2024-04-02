@@ -1,6 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import simpledialog
+from tkinter import messagebox, simpledialog
 from openpyxl import Workbook
 from datetime import datetime
 
@@ -9,7 +8,7 @@ class AttendanceApp(tk.Tk):
         super().__init__()
 
         self.title("Attendance Record App")
-        self.geometry("400x300")
+        self.geometry("400x400")
 
         self.students = ["John", "Alice", "Bob", "Emma", "David"]
 
@@ -22,10 +21,10 @@ class AttendanceApp(tk.Tk):
         label.pack(pady=10)
 
         for student in self.students:
-            check_button = tk.Checkbutton(self, text=student, variable=self.attendance_dict[student])
-            check_button.pack()
+            check_button = tk.Checkbutton(self, text=student, variable=self.attendance_dict[student], font=("Arial", 12))
+            check_button.pack(anchor=tk.W, padx=10, pady=5)
 
-        save_button = tk.Button(self, text="Save Attendance", command=self.save_attendance)
+        save_button = tk.Button(self, text="Save Attendance", command=self.save_attendance, font=("Arial", 12), bg="green", fg="white")
         save_button.pack(pady=20)
 
     def save_attendance(self):
@@ -47,14 +46,13 @@ class AttendanceApp(tk.Tk):
         ws.append(["Date", "Subject", "Student Name", "Attendance"])
 
         for student in self.students:
-            for i in range(4):
-                if i == 0:
-                    ws.append([date, subject if i == 1 else '', student if i == 2 else '', "Present" if student in present_students else "Absent"])
+            ws.append([date, subject, student, "Present" if student in present_students else "Absent"])
 
         # Save the workbook to a file
-        wb.save(f"{subject}_attendance_{date}.xlsx")
+        filename = f"{subject}_attendance_{date}.xlsx"
+        wb.save(filename)
 
-        messagebox.showinfo("Attendance Saved", f"Attendance saved to {subject}_attendance_{date}.xlsx")
+        messagebox.showinfo("Attendance Saved", f"Attendance saved to {filename}")
 
 if __name__ == "__main__":
     app = AttendanceApp()
