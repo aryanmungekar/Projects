@@ -65,4 +65,19 @@ while True:
             if matches[best_match_index]:
                 name - known_faces_names[best_match_index]
 
+            face_names.append(name)
+            if name in known_faces_names:
+                if name in students:
+                    students.remove(name)
+                    print(students)
+                    current_time = now.strftime("%H-%M-%S")
+                    lnwriter.writerow([name,current_time])
+    cv2.imshow("attendence system",frame)
+    if cv2.waitkey(1) & 0xFF == ord('q'):
+        break
+
+video_capture.release()
+cv2.destroyAllWindows()
+f.close()
+
 
