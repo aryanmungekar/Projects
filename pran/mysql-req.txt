@@ -1,0 +1,47 @@
+
+--------USED TO CERATE A DATABASE----
+
+CREATE DATABASE BANK_MANAGEMENT;
+
+
+
+
+-------USED TO CREATE A TABLE-----
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    roll_no VARCHAR(50),
+    subject1 INT,
+    subject2 INT,
+    subject3 INT,
+    subject4 INT,
+    subject5 INT
+);
+
+
+
+-----------USED TO INSERT THE STUDENT DATA---------
+
+INSERT INTO students (name, roll_no, subject1, subject2, subject3, subject4, subject5)
+VALUES ('John Doe', '2023001', 85, 90, 78, 92, 88);
+
+
+
+
+---------USED TO MAKE SPECIFIC CHANGES IN UPLOADED INFORMATION-----
+
+UPDATE students SET subject1 = 90 WHERE roll_no = '2023001';
+
+
+
+
+----------USED TO DELETE STUDENT INFO------
+
+DELETE FROM students WHERE roll_no = '2023001';
+
+
+
+------------INSERT DATA IN SPECIFIC ROW---------
+
+CREATE INDEX roll_no_index ON students (roll_no);
