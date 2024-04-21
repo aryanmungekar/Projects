@@ -1,0 +1,10 @@
+CREATE DATABAES ___
+
+show databases;
+
+use (database name);
+
+show tables;
+
+desc (tablename);
+
