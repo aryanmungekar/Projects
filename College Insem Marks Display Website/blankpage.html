@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='https://www.google.com/2005/gml/b' xmlns:data='https://www.google.com/2005/gml/data' xmlns:expr='https://www.google.com/2005/gml/expr'> 
+  <head>
+    <meta content='IE=EmulateIE7' http-equiv='X-UA-Compatible'/> 
+    <b:if cond='data:blog.isMobile'> 
+      <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0' name='viewport'/> 
+    <b:else/> 
+      <meta content='width=1100' name='viewport'/> 
+    </b:if> 
+    <b:include data='blog' name='all-head-content'/> 
+    <title><data:blog.pageTitle/></title>
+   <b:skin><![CDATA[/*
+-----------------------------------------------
+/////////// HTML THEME////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////TEMPLATE CREATED BY : FRINTON MADTHA////////////////////////////////////////////////////////////
+/////////////////////// DOWNLOAD FROM: www.FRINMASH.BLOGSPOT.com  //////////////////////////////////////////////////
+----------------------------------------------
+]]></b:skin>
+   
+  </head>
+  <body>
+   
+    <center><h1> Blank Blogger Template </h1></center>
+    <html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+    <title>Result Viewer</title>
+</head>
+<style>
+button {
+      position: relative;
+      margin: 0;
+      padding: 10px 25px;
+      outline: none;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      text-transform: uppercase;
+      background-color: #fff;
+      border: 1px solid rgba(22, 76, 167, 0.6);
+      border-radius: 10px;
+      color: #000000;
+      font-weight: 400;
+      font-family: inherit;
+      z-index: 0;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    button span {
+      color: #b005b6;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.7px;
+    }
+
+    button:hover {
+      animation: rotate624 0.7s ease-in-out both;
+    }
+
+    button:hover span {
+      animation: storm1261 0.7s ease-in-out both;
+      animation-delay: 0.06s;
+    }
+
+    @keyframes rotate624 {
+      0% {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+      }
+
+      25% {
+        transform: rotate(3deg) translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: rotate(-3deg) translate3d(0, 0, 0);
+      }
+
+      75% {
+        transform: rotate(1deg) translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes storm1261 {
+      0% {
+        transform: translate3d(0, 0, 0) translateZ(0);
+      }
+
+      25% {
+        transform: translate3d(4px, 0, 0) translateZ(0);
+      }
+
+      50% {
+        transform: translate3d(-3px, 0, 0) translateZ(0);
+      }
+
+      75% {
+        transform: translate3d(2px, 0, 0) translateZ(0);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0) translateZ(0);
+      }
+    }
+
+    .btn-shine {
+      border: 1px solid;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .btn-shine span {
+      z-index: 20;
+    }
+
+    .btn-shine:after {
+      background: #000000;
+      content: "";
+      height: 155px;
+      left: -75px;
+      opacity: 0.4;
+      position: absolute;
+      top: -50px;
+      transform: rotate(35deg);
+      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+      width: 50px;
+      z-index: -10;
+}
+
+    .btn-shine:hover:after {
+      left: 120%;
+      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+</style>
+<body>
+    <h1>Select Year, Branch, and Semester</h1> </br></br>
+    <form id="resultForm">
+        <label for="year">Select Year:</label></br>
+        <select id="year" name="year">
+            <!-- <option value="1">First Year</option> -->
+                 <option value="2">Second Year</option>
+            <!-- <option value="3">Third Year</option> -->
+            <!-- <option value="4">Fourth Year</option> -->
+        </select><br /><br />
+
+        <label for="branch">Select Branch:</label></br>
+        <select id="branch" name="branch">
+            <option value="CSEA">Computer Science and Engineering (Div-A)</option>
+           <option value="CSEB">Computer Science and Engineering (Div-B)</option>
+            <option value="AIDS">Artificial Intelligence and Data Science</option>
+ 
+            <!-- Add more branches as needed -->
+        </select><br /><br />
+
+        <label for="semester">Select Semester:</label><br/>
+        <select id="semester" name="semester">
+            <option value="1">INSEM</option>
+            <option value="2">ENDSEM</option>
+
+            <!-- Add more semesters as needed -->
+        </select><br /><br /><br />
+
+        <center><button class="btn-shine" type="submit" value="View Results">View Results</button></center>
+    </form>
+
+    <script>
+        document.getElementById("resultForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get selected values
+            const year = document.getElementById("year").value;
+            const branch = document.getElementById("branch").value;
+            const semester = document.getElementById("semester").value;
+
+            // Define the URL based on selected criteria
+            let url = ""; // Modify this line to specify the URL based on the selected criteria
+            switch(year + branch + semester){
+                case '2CSEA1':
+                    url = "https://pgmcoe-results.blogspot.com/2024/04/se-cse-a-insem.html";
+                    break;
+                case '2CSEA2':
+                    url = "https://pgmcoe-results.blogspot.com/p/no-result-found.html";
+                    break;
+                case '2CSEB1':
+                    url = "https://pgmcoe-results.blogspot.com/2024/04/se-cse-b-insem.html";
+                    break;
+                case '2CSEB2':
+                    url = "https://pgmcoe-results.blogspot.com/p/no-result-found.html";
+                    break;
+                case '2AIDS1':
+                    url = "https://pgmcoe-results.blogspot.com/2024/04/se-aids-insem.html";
+                    break;
+                case '2AIDS2':
+                    url = "https://pgmcoe-results.blogspot.com/p/no-result-found.html";
+                    break;
+                
+                
+                
+                default:
+                    url = "http://example.com"; // Default URL if no match is found
+                    break;
+            }
+
+            // Redirect the user to the specified URL
+            window.location.href = url;
+        });
+    </script>
+</body>
+</html>
+
+
+<!--Start Please keep the Credits intact-->
+<div style='margin-top:300px; '> 
+<center>
+  <p class='author'>&#169; <b>Frinton Madtha Productions</b> Collaboration with<a href='https://frinmash.blogspot.com/'> FrinMash </a></p></center></div>
+
+
+  <b:section class='navbar' id='navbar' maxwidgets='1' showaddelement='no'/>
+
+<!-- End Please keep the Credits intact-->
+  </body> 
+</html>
+
+ 

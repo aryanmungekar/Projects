@@ -1,0 +1,531 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    </meta>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    </meta>
+    <title>Result Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 1200px;
+        }
+
+        th,
+        td {
+            border: 1px solid #f2f2f29c;
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f0f1ef;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .dnld-btn {
+            width: 100%;
+            
+            display: flex;
+            justify-content: right;
+            padding-top: 30px;
+            align-items: center;
+        }
+
+
+        .student-image {
+            max-width: 150px;
+            max-height: 150px;
+            margin-top: 05px;
+            border: 2px solid #333;
+            margin-right: 20px;
+        }
+
+        #result-container {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        #student-info-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+
+        #printout-container {
+            display: flex;
+            flex-direction: column;
+            margin: 0px;
+            justify-content: space-between;
+            max-height: 100%;
+            padding: 0px;
+        }
+
+        #student-info {
+            margin-right: 20px;
+            text-align: left;
+        }
+
+        #student-info h4 {
+            margin: 5px 0;
+        }
+
+        #student-image {
+            text-align: right;
+            /* Align the image to the right */
+        }
+
+        #total-marks {
+            margin-top: 40px;
+            font-weight: bold;
+            font-size: 22px;
+            /* Increase font size */
+        }
+
+        #result-date {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 45px;
+            /* Add some space between total marks and result date */
+        }
+
+        #additional-message {
+            font-size: 14px;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 15px;
+            text-align: justify;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #333;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+            margin-top: 50px;
+            display: none;
+            /* Initially hide the spinner */
+        }
+
+        .loading-message {
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+            display: none;
+            /* Initially hide the loading message */
+        }
+
+        #input-fields {
+            border-radius: 25px;
+            background: #f0f1ef;
+            padding: 20px;
+            width: 70%;
+            height: 200px;
+        }
+
+        button {
+            position: relative;
+            margin: 0;
+            padding: 10px 25px;
+            outline: none;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-transform: uppercase;
+            background-color: #fff;
+            border: 1px solid rgba(22, 76, 167, 0.6);
+            border-radius: 10px;
+            color: #000000;
+            font-weight: 400;
+            font-family: inherit;
+            z-index: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+        }
+
+        button span {
+            color: #b005b6;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.7px;
+        }
+
+        button:hover {
+            animation: rotate624 0.7s ease-in-out both;
+        }
+
+        button:hover span {
+            animation: storm1261 0.7s ease-in-out both;
+            animation-delay: 0.06s;
+        }
+
+        @keyframes rotate624 {
+            0% {
+                transform: rotate(0deg) translate3d(0, 0, 0);
+            }
+
+            25% {
+                transform: rotate(3deg) translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: rotate(-3deg) translate3d(0, 0, 0);
+            }
+
+            75% {
+                transform: rotate(1deg) translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: rotate(0deg) translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes storm1261 {
+            0% {
+                transform: translate3d(0, 0, 0) translateZ(0);
+            }
+
+            25% {
+                transform: translate3d(4px, 0, 0) translateZ(0);
+            }
+
+            50% {
+                transform: translate3d(-3px, 0, 0) translateZ(0);
+            }
+
+            75% {
+                transform: translate3d(2px, 0, 0) translateZ(0);
+            }
+
+            100% {
+                transform: translate3d(0, 0, 0) translateZ(0);
+            }
+        }
+
+        .btn-shine {
+            border: 1px solid;
+            overflow: hidden;
+            position: relative;
+            background-color: palegreen;
+            font-weight: bold;
+        }
+
+        .btn-shine span {
+            z-index: 20;
+        }
+
+        .btn-shine:after {
+            background: #000000;
+            content: "";
+            height: 155px;
+            left: -75px;
+            opacity: 0.4;
+            position: absolute;
+            top: -50px;
+            transform: rotate(35deg);
+            transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+            width: 50px;
+            z-index: -10;
+        }
+
+        .btn-shine:hover:after {
+            left: 120%;
+            transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Student Result Portal</h1>
+    <center>
+        <div id="input-fields">
+            <label for="rollNo">Enter Roll Number:</label><br />
+            <input id="rollNo" type="text" /><br /><br />
+            <label for="password">Enter Password:</label><br />
+            <input id="password" type="password" /><br /><br /><br />
+            <button class="btn-shine" onclick="fetchAndDisplay()">Get Result</button><br />
+        </div>
+    </center>
+
+    <div id="printout-container">
+        <h1 id="result-header" class="hidden">Insem 2025 - TE AI and DS</h1><br><br>
+        <div id="student-info-container">
+            <div id="student-info"></div>
+            <div id="student-image"></div>
+        </div>
+        <div id="result-container"></div>
+        <div id="total-marks"></div>
+        <!-- Separate div for result date -->
+        <div id="result-date"></div>
+        <!-- Separate div for additional message -->
+        <div id="additional-message"></div>
+    </div>
+
+
+
+
+
+    <!-- Loading spinner -->
+    <div class="spinner" id="loading-spinner"></div>
+    <div class="loading-message" id="loading-message">Loading result...</div>
+
+
+    <div class="dnld-btn">
+        <button id="download-pdf-btn" style="display:none;" onclick="downloadPDF()">Download PDF</button>
+    </div>
+
+
+
+
+    <script>
+        const commonValues = {
+            branch: 'AI&DS',
+            year: 'SE',
+            instname: 'PARVATIBAI GENBA MOZE COLLEGE OF ENGINEERING'
+        };
+
+        const students = [
+            {
+                rollNo: '1001',
+                password: 'admin',
+                name: 'Aryan Mungekar',
+                motherName: 'Shraddha',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9TEUEh7qUBQBj7O6TG0YWiJ2wOvTL41F1KEETVmKR8IakjHqDhsmPs_GiQez1W_5NaGQbC_XvWkYPvYHS3x5fFDNOnzvkky0NPWS8HghaeI6cQJ6wcCKuJABpRX2N3YatPxHRjACtW9twTXDu-wxTSbudwJ-UOzYRCQe765Isxhl2_o4G6uy_jvqq93o/s320/PHOTO-2024-04-09-19-55-09%205.jpg',
+                marks: [28, 28, 28, 28, 28]
+            },
+            {
+                rollNo: '1002',
+                password: 'admin',
+                name: 'Om Gadhave',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEja37b-ZP4P_aOlmz6BaXXvPYNt0k_qKEKRGAaGro1tCATIUzFsYLAKkcVopGuER-X8Lp0Q0vVaX6PBkJC9ZDyyaiAYGLFtKVY50FQ_pXyrlbfd7LKznLjZNbP1wq4aACZYBIq1-kVxq38TJvbrT_oUuwFFAZrcI1BJfCi1LF13ohV6S76NkCI6jzUVJFQ/s1600/PHOTO-2024-04-09-19-55-09%203.jpg',
+                marks: [22, 26, 26, 27, 22]
+            },
+            {
+                rollNo: '1003',
+                password: 'admin',
+                name: 'Kishan Wadhava',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0vbdoSYqem_5UTBItLyCvMXbGf0StsFS2csSEY9Dxa4iftYZEzqz-OGotvnzUPLT1wZGkkrU8-VPfNbMkYpcGiHrQacW8MI647JiydHRtgwAKCQd5M-pd8sM77Dek6t8KphCQ2-HtKKYWDWEF9ZL0W6PxQI72kkAxUxsK1d1TneIlhU8f9bJZAD7Ypr4/s320/PHOTO-2024-04-09-19-55-09.jpg',
+                marks: [29, 27, 28, 22, 27]
+            },
+            {
+                rollNo: '1004',
+                password: 'admin',
+                name: 'Yash Mishra',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhtdSmwn87Xxd1gDlvXvavQml8NwlthLcggg5243gKK1RvhgyseOj5q3av0gPmb7LgGWL8DCSjXOeXMw6_mGwx5CisMlrCgblbNA2SKZyWrbzno_Q8bq0TJt56801t5o8DdNB4HISyFSCghnQFqAtoa9I25dIGI3NuiE-AwcCqNg4pcib4cOMV7g6tDpsM/s320/PHOTO-2024-04-09-19-55-09%204.jpg',
+                marks: [12, 23, 22, 23, 23]
+            },
+            {
+                rollNo: '1005',
+                password: 'admin',
+                name: 'Gaurav Lakade',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR0DTKROzujdDr8Ciq_x_NRJPuxibx78qG2UiumyqAJWs0fAvK8LHPnu8V69SOMkB70fYdoiD7F0XPfUwlFtq733x1Bh9OwRLGjOnvH9qwNsFWHLLZXhRa9j_XusCrXyhesNT9hJ93OejUNdS4zQtVJ5MKjidISpH448hRDM9vDYU0uMGNR-aUCIXzUa0/s516/PHOTO-2024-04-09-19-55-09%202.jpg',
+                marks: [7, 8, 9, 22, 30]
+            },
+            {
+                rollNo: '1006',
+                password: 'admin',
+                name: 'Vaibhav ',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUggQHS170DL9RJh0xEQIRFcYdsTTfnF83qNouZM0EYWiWk7B4m0tZT98cRXFai_9S1Qg-RQ53zqbtwslzf0zv6_B0dIbQ_SglQuA7RpggOcXorFn3W6SG5oMGQrC60sOnYWE9ImXcRctOaZMp4nZ7O2qfAnOXW1h9Veji4_CPOc9JQ_a_xuWDAgSAap0/s320/IMG_3615%20(1).jpg',
+                marks: [23, 22, 21, 27, 29]
+            },
+            {
+                rollNo: '1007',
+                password: 'admin',
+                name: 'Rutuja Patil',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhH2PRU1G0sudmcvTIXFxa24UOoRoZURamd0Q5bd6MeZnfzw9yOPIbmomGOZKBfLfRliaSWpP9mWtf-Q_vinsrgileQgPtDnLz3IzOPxygOzhsBA_SIYhto4_YkOP8ODKALbKAcC49-CHQHGi7NxHXFVY1-R0WVb0DRTjHiT_G7r_2hkYtDxuJcdUSajYk/s320/IMG_3989.jpg',
+                marks: [12, 8, 7, 22, 29]
+            },
+            {
+                rollNo: '1008',
+                password: 'admin',
+                name: 'Pranavi Phadatare',
+                motherName: 'XYZ',
+                image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglvYrTWCLEdrHcCLJV1FFdqpmX1KoL2upJ8XuN_9zN74lDfYk2H8e0V31_n4mj-4cA6e7DtjdRYLxa5chNVanresCiubHaIuJATLjjDKsALVrEYCGVqE-S8pQwj-IfK9aLVMpezcl8TJNNmrUDkKzpnpsau0T6BoY9EWViRcnLhmpgJPyUCJizdtrOA9s/s1413/IMG_3868.jpg',
+                marks: [30, 30, 30, 30, 30]
+            },
+
+
+        ];
+
+        function fetchAndDisplay() {
+            const rollNo = document.getElementById('rollNo').value;
+            const password = document.getElementById('password').value;
+
+            if (!rollNo || !password) {
+                alert('Please enter both Roll Number and Password.');
+                return;
+            }
+
+            const commonPassword = "11111";
+
+            const student = students.find(student => student.rollNo === rollNo && student.password === password || student.motherName === password || commonPassword === password);
+
+            if (student) {
+                const resultContainer = document.getElementById('result-container');
+                const loadingSpinner = document.getElementById('loading-spinner');
+                const loadingMessage = document.getElementById('loading-message');
+
+                // Display loading spinner and message
+                loadingSpinner.style.display = 'block';
+                loadingMessage.style.display = 'block';
+
+                // Delay display of result by 5 seconds
+                setTimeout(() => {
+                    const studentInfoContainer = document.getElementById('student-info');
+                    const studentImageContainer = document.getElementById('student-image');
+                    const totalMarksContainer = document.getElementById('total-marks');
+
+                    const subjects = ['Statistics', 'DSA', 'SE', 'IOT', 'MIS'];
+
+                    const table = document.createElement('table');
+                    const headerRow = document.createElement('tr');
+                    const headers = ['Subject', 'Marks', 'Result'];
+                    headers.forEach(headerText => {
+                        const th = document.createElement('th');
+                        th.textContent = headerText;
+                        headerRow.appendChild(th);
+                    });
+                    table.appendChild(headerRow);
+
+                    let totalMarks = 0; // Variable to store total marks
+
+                    for (let i = 0; i < subjects.length; i++) {
+                        const marks = student.marks[i];
+                        const passed = marks >= 12; // Assuming passing marks is 12
+                        const tr = document.createElement('tr');
+                        const subjectCell = document.createElement('td');
+                        subjectCell.textContent = subjects[i];
+                        tr.appendChild(subjectCell);
+                        const marksCell = document.createElement('td');
+                        marksCell.textContent = marks;
+                        tr.appendChild(marksCell);
+                        const resultCell = document.createElement('td');
+                        resultCell.textContent = passed ? 'Passed' : 'Failed';
+                        tr.appendChild(resultCell);
+                        table.appendChild(tr);
+
+                        totalMarks += marks; // Add marks to total marks
+                    }
+
+                    resultContainer.innerHTML = '';
+                    resultContainer.appendChild(table);
+
+                    studentInfoContainer.innerHTML = `
+                              <h4>Name: ${student.name}</h4>
+                              <h4>Roll Number: ${student.rollNo}</h4>
+                              <h4>Mother's Name: ${student.motherName}</h4>
+                              <h4>Year: ${commonValues.year}</h4>
+                              <h4>Branch: ${commonValues.branch}</h4>
+                              <h4>Institute: ${commonValues.instname}</h4>
+                          `;
+
+                    studentImageContainer.innerHTML = `
+                              <img src="${student.image}" alt="${student.name} image" class="student-image">
+                          `;
+
+                    totalMarksContainer.textContent = `Total Marks: ${totalMarks}`;
+
+                    // Show the result header
+                    document.getElementById('result-header').classList.remove('hidden');
+
+                    // Display result date
+                    const resultDate = document.getElementById('result-date');
+                    resultDate.textContent = 'Result Date: 1-5-2024'; // Constant result date
+
+                    // Display additional message
+                    const additionalMessage = document.getElementById('additional-message');
+                    additionalMessage.textContent = 'The results published online are for immediate information only. These cannot be treated as the original statement of marks. Please verify the information from the original statement of marks issued by the Savitribai Phule Pune University separately.';
+
+
+
+                    document.getElementById('download-pdf-btn').style.display = 'block';
+
+
+
+                    // Hide input fields after displaying results
+                    document.getElementById('input-fields').style.display = 'none';
+
+                    // Hide loading spinner and message when result is displayed
+                    loadingSpinner.style.display = 'none';
+                    loadingMessage.style.display = 'none';
+                }, 5000); // 5 seconds delay (5000 milliseconds)
+            } else {
+                alert('No result found for the provided Roll Number and Password.');
+            }
+        }
+    </script>
+    <script>
+        function downloadPDF() {
+            // Select the container you want to capture (e.g., 'resultContainer')
+            const resultContainer = document.querySelector('#printout-container'); // Change this selector as needed
+
+
+
+            // Capture the content of the result container
+            html2canvas(resultContainer, { scale: 2 }).then(canvas => {
+                const { jsPDF } = window.jspdf; // Ensure jsPDF is properly referenced
+
+                const pdf = new jsPDF('p', 'mm', 'a4'); // Create a new PDF instance
+
+                const imgData = canvas.toDataURL('image/png'); // Convert canvas to an image
+
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight); // Add the image to the PDF
+
+                pdf.save('result.pdf'); // Trigger the download
+
+
+            }).catch((error) => {
+                console.error('Error generating PDF:', error); // Catch errors and log them
+                downloadButton.style.display = 'block'; // Ensure the button is visible if there's an error
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
